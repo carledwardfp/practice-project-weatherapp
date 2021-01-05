@@ -1,0 +1,52 @@
+.tempNweather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: white;
+}
+
+.w-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 0;
+}
+
+/* .w-icon p {
+    font-family: artill_clean_icons;
+    font-size: 50px;
+} */
+
+.temperature {
+    font-size: 120px;
+    font-family: sans-serif;
+    font-weight: 300;
+    display: flex;
+    flex-direction: row;
+}
+
+.temperature p {
+    font-size: 100px;
+    position: absolute;
+    left: calc(50% + 60px);
+}
+
+.temperature .negative {
+    font-size: 100px;
+    position: absolute;
+    left: calc(50% - 90px);
+    display: none;
+}
+
+.temperature .negative-show {
+    display: block;
+}
+
+.weather {
+    font-size: 20px;
+    text-transform: uppercase;
+}

@@ -1,0 +1,48 @@
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 200;
+    padding: 10px;
+}
+
+.date {
+    margin-top: -10px;
+}
+
+.city {
+    font-size: 35px;
+    /* text-transform: uppercase; */
+}
+
+.settings {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 2;
+}
+
+.settings button {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 27px;
+}
+
+.settings button:focus {
+    outline: 0;
+}
+
+.settings button:active i {
+    transform: scale(1.2);
+}

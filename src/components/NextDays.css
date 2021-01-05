@@ -1,0 +1,33 @@
+.nextdays-list {
+    /* color: #323e5a;
+    margin-bottom: 55px; */
+    width: 100%;
+    height: 100px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.next-days {
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: white;
+}
+
+.nd-temp {
+    font-size: 30px;
+}
