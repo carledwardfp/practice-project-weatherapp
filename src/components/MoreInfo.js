@@ -9,7 +9,7 @@ function MoreInfo({ wind, pressure, humidity }) {
           <i className="fas fa-wind" />
         </div>
         <div className="info-num">
-          {wind.speed}, {wind.deg}&#176;
+          {wind.speed} m/s, {wind.deg}&#176;
         </div>
         <div className="info-name">Wind</div>
       </div>
@@ -26,7 +26,7 @@ function MoreInfo({ wind, pressure, humidity }) {
         <div className="info-icon">
           <i className="fas fa-tint" />
         </div>
-        <div className="info-num">{humidity}</div>
+        <div className="info-num">{humidity}%</div>
         <div className="info-name">Humidity</div>
       </div>
     </div>
