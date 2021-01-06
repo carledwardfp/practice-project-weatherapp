@@ -3,54 +3,46 @@ import axios from "axios";
 import "./App.css";
 import Details from "./components/Details";
 import Header from "./components/Header";
-import NextDays from "./components/NextDays";
+import MoreInfo from "./components/MoreInfo";
 
 const App = () => {
-  const [data, setData] = useState({});
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [temp, setTemp] = useState("");
-  const [weatherDesc, setWeatherDesc] = useState("");
-  const [weatherMain, setWeatherMain] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState(undefined);
+  // const [city, setCity] = useState("");
+  // const [country, setCountry] = useState("");
+  // const [temp, setTemp] = useState("");
+  // const [weatherDesc, setWeatherDesc] = useState("");
+  // const [weatherMain, setWeatherMain] = useState("");
+  // // const [isLoading, setIsLoading] = useState(true);
   const [openSettings, setOpenSettings] = useState(false);
   const [icon, setIcon] = useState("");
   const [value, setValue] = useState("");
   const [cityName, setCityName] = useState("");
+  const [error, setError] = useState(null);
 
   const ref = useRef();
-  
 
+  useEffect(()=>{
+    const city = localStorage.getItem('cityName') ? localStorage.getItem('cityName') : ''
+    setCityName(city)
+  },[])
+  
   useEffect(() => {
     const fetchAPI = async () => {
       const CITY = cityName !== "" ? cityName : "Manila";
-      const API_KEY = "9b463ab5faf898bca815b6b53d424a9d";
+      const API_KEY = "01eafe859d945c81bf50e3ad12db0b71";
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric`;
       try {
         const res = await axios.get(url);
         setData(res.data);
-        setCity(res.data.name);
-        setCountry(res.data.sys.country);
-        setTemp(res.data.main.temp);
-        setWeatherDesc(res.data.weather[0].description);
-        setWeatherMain(res.data.weather[0].main);
-        setIsLoading(false);
         setIcon(
           `https://openweathermap.org/img/wn/${res.data.weather[0].icon}.png`
         );
       } catch (error) {
-        return error;
+        setError(error);
       }
-    //   console.log('data: ', data)
     };
     fetchAPI();
-
-  }, [cityName, city, data]);
-
-  useEffect(()=>{
-      const cityName = localStorage.getItem('cityName') ? localStorage.getItem('cityName') : ''
-      setCityName(cityName)
-  },[])
+  }, [cityName]);
 
   const handleToggle = () => {
     setOpenSettings(!openSettings);
@@ -69,35 +61,21 @@ const App = () => {
     localStorage.setItem('cityName', value)
   };
 
-  let dayOrNight;
+  let dayOrNight = 'day';
   const d = new Date();
   const hour = d.getHours();
-  if (hour >= 4 && hour < 6) {
+  if (hour >= 4 && hour < 17) {
     dayOrNight = "day";
   } else {
     dayOrNight = "night";
   }
 
-  let weather;
-  if (
-    weatherMain === "Clouds" ||
-    weatherMain === "Smoke" ||
-    weatherMain === "Mist" ||
-    weatherMain === "Haze"
-  ) {
-    weather = "cloudy";
-  } else if (weatherMain === "Rain" || weatherMain === "Snow") {
-    weather = "rain";
-  } else if (weatherMain === "Clear") {
-    weather = "clear";
-  }
+  let weather = 'clear';
 
   const background = `${process.env.PUBLIC_URL}/images/weather-${dayOrNight}-${weather}.png`;
 
   let iClassName;
-  openSettings
-    ? (iClassName = "fas fa-caret-up")
-    : (iClassName = "fas fa-caret-down");
+  openSettings ? (iClassName = "fas fa-caret-up") : (iClassName = "fas fa-caret-down");
 
   let divClassName;
   openSettings ? (divClassName = "form form-active") : (divClassName = "form");
@@ -122,8 +100,13 @@ const App = () => {
           backgroundImage: `url(${background})`,
         }}
       >
-        {isLoading ? (
-          <p>If the content is still not loading, the api key might be temporary blocked due to exceeding of requests limitation. If that's the case, please contact me at https://official-carledwardfp.github.io/portfolio/</p>
+        {error ? (
+          <p>
+            If the content is still not loading, the api key might be temporary
+            blocked due to exceeding of requests limitation. If that's the case,
+            please contact me at
+            https://official-carledwardfp.github.io/portfolio/
+          </p>
         ) : (
           <>
             <div className="settings">
@@ -170,12 +153,29 @@ const App = () => {
                 </button>
               </form>
             </div>
-
-            <div className="container">
-              <Header city={city} country={country} openSettings={openSettings} />
-              <Details temp={temp} weather={weatherDesc} icon={icon} />
-              <NextDays cityName={cityName}/>
-            </div>
+            {typeof data != 'undefined' ? (
+              <div className="container">
+                <Header
+                  city={data.name}
+                  country={data.sys.country}
+                  openSettings={openSettings}
+                />
+                <Details
+                  temp={data.main.temp}
+                  weather={data.weather[0].description}
+                  icon={icon}
+                />
+                <MoreInfo
+                  wind={data.wind}
+                  pressure={data.main.pressure}
+                  humidity={data.main.humidity}
+                />
+              </div>
+            ) : (
+              <div className='container'>
+                
+              </div>
+            )}
           </>
         )}
       </div>

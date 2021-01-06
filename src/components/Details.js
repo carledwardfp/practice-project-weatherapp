@@ -8,9 +8,14 @@ function Details({ temp, weather, icon }) {
   return (
     <div className="tempNweather">
       <div className="w-icon">
-        <img src={icon} alt={weather} />
+        <img
+          src={icon}
+          alt={weather}
+        />
       </div>
+
       <div className="weather">{weather}</div>
+      
       <div className="temperature">
         <p className={sign}>-</p>
         {temp < 10 && temp > 0
@@ -18,6 +23,7 @@ function Details({ temp, weather, icon }) {
           : Math.abs(Math.round(temp))}
         <p>&#176;</p>
       </div>
+
     </div>
   );
 }
