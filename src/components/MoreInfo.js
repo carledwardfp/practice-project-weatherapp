@@ -17,9 +17,7 @@ function MoreInfo({ wind, pressure, humidity }) {
         <div className="info-icon">
           <i className="fab fa-product-hunt" />
         </div>
-        <div className="info-num">
-          {Math.round(pressure / 33.864).toFixed(2)} inHg
-        </div>
+        <div className="info-num">{(pressure / 33.864).toFixed(2)} inHg</div>
         <div className="info-name">Pressure</div>
       </div>
       <div className="info humidity">
